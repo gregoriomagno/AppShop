@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop/providers/cart.dart';
 import 'package:provider/provider.dart';
 class CartItemWidget extends StatelessWidget {
-  final CardItem cartItem;
+  final CartItem cartItem;
   CartItemWidget(this.cartItem);
   @override
   Widget build(BuildContext context) {

@@ -3,14 +3,14 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:shop/providers/product.dart';
 
-class CardItem {
+class CartItem {
   final String id;
   final String productId;
   final String title;
   final int quantity;
   final double price;
 
-  CardItem({
+  CartItem({
     @required this.id,
     @required this.productId,
     @required this.title,
@@ -20,9 +20,9 @@ class CardItem {
 }
 
 class Cart with ChangeNotifier {
-  Map<String, CardItem> _items = {};
+  Map<String, CartItem> _items = {};
 
-  Map<String, CardItem> get items {
+  Map<String, CartItem> get items {
     return {..._items};
   }
 
@@ -46,7 +46,7 @@ class Cart with ChangeNotifier {
   void addItem(Product product) {
     if (_items.containsKey(product.id)) {
       _items.update(product.id, (existingItem) {
-        return CardItem(
+        return CartItem(
             id: existingItem.id,
             productId: product.id,
             title: existingItem.title,
@@ -56,7 +56,7 @@ class Cart with ChangeNotifier {
     } else {
       _items.putIfAbsent(
           product.id,
-          () => CardItem(
+          () => CartItem(
                 id: Random().nextDouble().toString(),
                 productId: product.id,
                 title: product.title,
@@ -64,6 +64,11 @@ class Cart with ChangeNotifier {
                 price: product.price,
               ));
     }
+    notifyListeners();
+  }
+
+  void clear() {
+    _items = {};
     notifyListeners();
   }
 }
